@@ -72,7 +72,7 @@ def boxplot_redblue(results):
     sns.set_style("darkgrid")
 
     # Create a figure and axis for the box plots
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(14, 9))
 
     # Initialize lists to store boxplot statistics and positions for each party
     boxplot_stats_dem = []
@@ -111,8 +111,8 @@ def boxplot_redblue(results):
     ax.axhline(y=(sum(ult_avg_rating_rep) / len(ult_avg_rating_rep)), color='red', linestyle='dashed', label='Average Rating (R)', alpha=0.7)
 
     # Create the boxplots for Democratic and Republican ratings
-    ax.boxplot(boxplot_stats_dem, positions=positions_dem, widths=1.8, patch_artist=True, boxprops=dict(facecolor='blue'))
-    ax.boxplot(boxplot_stats_rep, positions=positions_rep, widths=1.8, patch_artist=True, boxprops=dict(facecolor='red'))
+    ax.boxplot(boxplot_stats_dem, positions=positions_dem, widths=1.8, patch_artist=True, boxprops=dict(facecolor='lightblue',edgecolor='black', linewidth=1), medianprops=dict(color='black', linewidth=1))
+    ax.boxplot(boxplot_stats_rep, positions=positions_rep, widths=1.8, patch_artist=True, boxprops=dict(facecolor='lightcoral',edgecolor='black', linewidth=1), medianprops=dict(color='black', linewidth=1))
 
     # Set the x-axis tick positions and labels
     ax.set_xticks(results['year'])
