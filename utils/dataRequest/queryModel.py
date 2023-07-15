@@ -1,6 +1,3 @@
-import tqdm
-import pandas as pd
-import os
 import openai
 import json
 import requests
@@ -36,19 +33,3 @@ def queryGPT(message, model="gpt-3.5-turbo", temperature=0.7):
             time.sleep(120)
 
     return returnvar
-
-
-def generatePoems(name, poemcount=3):
-    output_poems = []
-    for i in tqdm.tqdm(range(poemcount), desc=f"President: {name}"):
-        out = queryGPT(f"Write a 8 line poem about {name}.")
-        output_poems.append(out)
-    return pd.DataFrame(output_poems, columns=["output"])
-
-
-def storePoems(poem_df, name):
-    poem_df.to_csv(f"./Political Poems Main 2/{name}_poems.csv")
-
-
-def loadPoems(name):
-    return pd.read_csv(f"./Political Poems Main 2/{name}_poems.csv")
