@@ -11,7 +11,7 @@ def binRange(start,stop,step):
     return returnList
 
 
-def hist_redblue(results):
+def hist_redblue(results, typename = ''):
     inc = 0.025
     bins = binRange(0, 1, inc )
     binsoffset = binRange(0+inc/2, 1+inc/2, inc )
@@ -34,9 +34,6 @@ def hist_redblue(results):
     #Separate DataFrames for each party
     party_d = expanded_df[expanded_df['party'] == 'D']
     party_r = expanded_df[expanded_df['party'] == 'R']
-    #print(party_r['name'].value_counts())
-    #print('Length D:', len(party_d))
-    #print('Length R:', len(party_r))
 
     #Histograms
     sns.histplot(data=party_d, x='ratings', bins = bins, color='blue', alpha=0.5, label='Democrats')
@@ -61,7 +58,7 @@ def hist_redblue(results):
     #Labels and title
     plt.xlabel('President Rating')
     plt.ylabel('Count (1001 Republican, 1000 Democrat)')
-    plt.title('President Ratings by Party - ChatGPT 3.5 API')
+    plt.title(f'President Ratings by Party - ChatGPT 3.5 API [{typename}]')
 
     #Legend
     plt.legend()
@@ -70,7 +67,7 @@ def hist_redblue(results):
 
 
 
-def boxplot_redblue(results):
+def boxplot_redblue(results, typename = ''):
     #Seaborn style
     sns.set(style="ticks")
     sns.set_style("darkgrid")
@@ -130,7 +127,7 @@ def boxplot_redblue(results):
     #Labels for the axes
     plt.xlabel('Year')
     plt.ylabel('President Ratings')
-    plt.title('President Ratings by Party and Year - ChatGPT 3.5 API')
+    plt.title(f'President Ratings by Party and Year - ChatGPT 3.5 API [{typename}]')
 
     #Legend
     ax.legend()
@@ -160,73 +157,6 @@ def scatterplot_redblue(results):
     plt.title('President Ratings by Party and Year - ChatGPT 3.5 API')
 
     plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def binRange(start,stop,step):
-#     returnList = []
-#     for i in range(int(1+((stop-start)/step))):
-#         returnList.append(round((i+start)*step,5))
-#     return returnList
-#
-#
-# inc = 0.1
-# bins = binRange(0, 1, inc )
-# binsoffset = binRange(0+inc/2, 1+inc/2, inc )
-# print('Bins:',bins)
-
-# fig, axs = plt.subplots(2,figsize=(6, 6))
-#
-# def makeaxs(i,data,name='unnamed'):
-#     if i == 0: color = "lightcoral"
-#     else: color = "skyblue"
-#
-#     axs[i].hist(data,
-#     #range = [0,6],
-#     bins=bins,
-#     edgecolor='black',
-#     ec="k",
-#     align='mid',
-#     #legend=name,
-#     #cumulative = True
-#     color = color
-#     )
-#
-#     axs[i].locator_params(axis='y', integer=True)
-#     axs[i].set_ylim(0, 8)
-#
-# makeaxs(0,repRatings,"Republican President Ratings By ChatGPT")
-# makeaxs(1,demRatings,"Democratic President Ratings By ChatGPT")
-
-# X =
-# Y1 = repRatings
-# Y2 = demRatings
-#
-# fig, ax = plt.subplots()
-# ax.plot(X,Y1,'o')
-# ax.plot(X,Y2,'x')
-# plt.show()
-
-#plt.tight_layout()
-#plt.axis('equal')
-# plt.show()
-
-
-
 
 
 

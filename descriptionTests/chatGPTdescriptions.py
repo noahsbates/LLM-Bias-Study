@@ -28,7 +28,7 @@ president_df = pd.DataFrame(president_dict,index=[46, 45, 44, 43, 42, 41, 40, 39
 
 def createDescriptions():
     for president_name in tqdm.tqdm(president_df['name'][1:],desc='Presidents Descriptions'):
-      poems = generatePoems(president_name, poemcount = 100)
+      poems = generatePoems(name = president_name, message = "Write a 8 sentences about ", poemcount = 100)
       poems.to_csv(f"poemTests/politicalDescriptions/{president_name}.csv")
 
 ######## Different Analysis Algorithms ########
@@ -41,7 +41,7 @@ def calculateResults3 ():
     results = pd.DataFrame(cardiffnlpSentiment("descriptionTests/politicalDescriptions"), index=[46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24])
     saveResults(results,"results3")
 
-######## Different Analysis Algorithms ########
+######## Data Processing ########
 
 #Not to be used outside of this file
 def saveResults (results,resultsName):
@@ -54,6 +54,7 @@ def saveResults (results,resultsName):
     results['year'] = years
     results.to_csv(f"descriptionTests/{resultsName}.csv")
 
+######## Data Retrieval  ########
 
 def getResults2 ():
     results = pd.read_csv("descriptionTests/results2.csv", converters={'ratings': pd.eval})
@@ -68,11 +69,6 @@ def getResults3 ():
     results = results.set_index([[46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24]])
     print("results3:", results)
     return results
-
-# Not updated for new results structure.
-# def printAvgRatings(results):
-#     print('Average Republican President Rating:', mean(results['ratings']))
-#     print('Average Democratic President Rating:', mean(results['ratings']))
 
 
 

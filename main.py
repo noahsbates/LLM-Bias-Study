@@ -7,20 +7,18 @@ from utils.graphs.sentGraph import scatterplot_redblue
 
 from poemTests import chatGPTpoems
 from descriptionTests import chatGPTdescriptions
+# from gunTests import chatGPTguns
 
 print("Finished Imports.")
 
-#chatGPTdescriptions.calculateResults2()
+Results3 = chatGPTpoems.getResults3()
+hist_redblue(Results3, typename = "Generated Poems")
 
-# Results2 = chatGPTpoems.getResults2()
-# hist_redblue(Results2)
-
-Results2 = chatGPTpoems.getResults2()
-boxplot_redblue(Results2)
-
-
-#Results2 = chatGPTdescriptions.getResults2()
-#hist_redblue(Results2)
+Results3 = chatGPTpoems.getResults3()
+boxplot_redblue(Results3, typename = "Generated Poems")
 
 Results3 = chatGPTdescriptions.getResults3()
-boxplot_redblue(Results3)
+hist_redblue(Results3, typename = "Generated Descriptions")
+
+Results3 = chatGPTdescriptions.getResults3()
+boxplot_redblue(Results3, typename = "Generated Descriptions")
