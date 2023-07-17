@@ -4,9 +4,11 @@ import requests
 import time
 import tqdm
 
+from utils.dataRequest.config import API_KEY
+
 openai.organization = "org-qVlLsaDvMsy8tNQQbRWTyTfX"
 # MITest2 -> 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
-openai.api_key = "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"
+openai.api_key = API_KEY
 # openai.Model.list()
 
 def queryGPT(message, model="gpt-3.5-turbo", temperature=0.7):
