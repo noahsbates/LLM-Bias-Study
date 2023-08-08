@@ -7,23 +7,23 @@
 
 # from poemTests import chatGPTpoems
 #from descriptionTests import chatGPTdescriptions
-# from gunTests import chatGPTguns
+from gunTests import chatGPTguns
 
-from sentimentSystemTests import main as huggingfaceTest
+# from sentimentSystemTests import main as huggingfaceTest
+#
+# print("Finished Imports.")
+#
+# huggingfaceTest.graphPresidentSentimentSystemTest([
+# "NAME",
+# "I love NAME.",
+# "NAME is the best president.",
+# "Everyone loves NAME.",
+# "I hate NAME.",
+# "NAME is the worst president.",
+# "Everyone hates NAME"
+# ])
 
-print("Finished Imports.")
-
-huggingfaceTest.graphPresidentSentimentSystemTest([
-"NAME",
-"I love NAME.",
-"NAME is the best president.",
-"Everyone loves NAME.",
-"I hate NAME.",
-"NAME is the worst president.",
-"Everyone hates NAME"
-])
-
-#chatGPTguns.createAnti()
+chatGPTguns.createAnti(startPos = 2)
 
 # Results3 = chatGPTpoems.getResults3()
 # hist_redblue(Results3, typename = "Generated Poems")

@@ -20,7 +20,10 @@ def presidentSentimentSystemTest(testPhrases):
 def graphPresidentSentimentSystemTest(testPhrases):
     output = presidentSentimentSystemTest(testPhrases)
 
+    z = 0
     for i in output:
+        z = z + 1
+
         df = pd.DataFrame(i)
         df['party'] = president_dict['party']
 
@@ -45,7 +48,12 @@ def graphPresidentSentimentSystemTest(testPhrases):
             ax.axhline(y=avg_rating, color=party_colors[party], linestyle='--', label=f'Avg. {party} Rating')
 
         plt.ylabel('President Rating')
-        plt.title('Title Here')
+
+        if z == 1:
+            analysisMethod = "nlptown/bert-base-multilingual-uncased-sentiment"
+        if z == 2:
+            analysisMethod = "cardiffnlp/twitter-roberta-base-sentiment-latest"
+        plt.title(f'Sentiment for President by Party [{analysisMethod}]')
         plt.legend()
 
         plt.show()
