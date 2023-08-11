@@ -136,7 +136,7 @@ def boxplot_redblue(results, wide = False, typename = ''):
     #Labels for the axes
     plt.xlabel('Year')
     plt.ylabel('President Ratings')
-    plt.title(f'President Ratings by Party and Year - ChatGPT 3.5 API [{typename}]')
+    plt.title(f'President Ratings by Party and Year - [{typename}]')
 
     #Legend
     ax.legend()
