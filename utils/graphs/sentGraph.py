@@ -2,19 +2,28 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import statistics as stats
+import numpy as np
 
 
-def binRange(start,stop,step):
-    returnList = []
-    for i in range(int(1+((stop-start)/step))):
-        returnList.append(round((i+start)*step,5))
-    return returnList
+# def binRange(start,stop,step):
+#     returnList = []
+#     for i in range(int(1+((stop-start)/step))):
+#         returnList.append(round((i+start)*step,5))
+#     return returnList
 
+def hist_redblue(results, wide = False, typename = ''):
+    # inc = 0.025
+    # if wide:
+    #     bins = binRange(-1, 1, inc )
+    # else:
+    #     bins = binRange(0, 1, inc )
 
-def hist_redblue(results, typename = ''):
-    inc = 0.025
-    bins = binRange(0, 1, inc )
-    binsoffset = binRange(0+inc/2, 1+inc/2, inc )
+    if wide:
+        bins = np.linspace(-1,1,81)
+    else:
+        bins = np.linspace(0,1,41)
+    
+    #binsoffset = binRange(0+inc/2, 1+inc/2, inc )
 
     sns.set(style="ticks")
     sns.set_style("darkgrid")
@@ -67,7 +76,7 @@ def hist_redblue(results, typename = ''):
 
 
 
-def boxplot_redblue(results, typename = ''):
+def boxplot_redblue(results, wide = False, typename = ''):
     #Seaborn style
     sns.set(style="ticks")
     sns.set_style("darkgrid")

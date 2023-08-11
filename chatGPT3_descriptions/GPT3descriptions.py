@@ -12,6 +12,9 @@ from utils.dataRequest.generator import poemCompiler
 from utils.sentimentAnalysis.analysis import nlptownSentiment
 from utils.sentimentAnalysis.analysis import cardiffnlpSentiment
 
+from utils.sentimentAnalysis.analysisWideScale import nlptownSentimentWide
+from utils.sentimentAnalysis.analysisWideScale import cardiffnlpSentimentWide
+
 from utils.dataFilter.removeName import replaceEntireSet
 
 from utils.models.modelTemplates import biasFinder
@@ -40,10 +43,16 @@ def createDescriptions():
         descriptionBias.createDescriptionSet("politicalDescriptions", f"Write a 10 sentence description about {president_name}.", president_name, 100)
 
 def analyzeNLP():
-    descriptionBias.analyze(nlptownSentiment,"politicalDescriptionsNameless","nlptown_nameless"),
+    descriptionBias.analyze(nlptownSentiment,"politicalDescriptionsNameless","nlptown_nameless")
 
 def analyzeCAR():
     descriptionBias.analyze(cardiffnlpSentiment,"politicalDescriptionsNameless","cardiffnlp_nameless")
+
+def analyzeNLPwide():
+    descriptionBias.analyze(nlptownSentimentWide,"politicalDescriptionsNameless","nlptown_nameless_wide")
+
+def analyzeCARwide():
+    descriptionBias.analyze(cardiffnlpSentimentWide,"politicalDescriptionsNameless","cardiffnlp_nameless_wide")
 
 def getResults (resultsFilename):
     return descriptionBias.getResults(resultsFilename)

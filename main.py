@@ -3,17 +3,22 @@
 
 from utils.graphs.sentGraph import hist_redblue
 from chatGPT3_poems import GPT3poems
-# from chatGPT3_descriptions import GPT3descriptions
+from chatGPT3_descriptions import GPT3descriptions
 from chatGPT4_poems import GPT4poems
 
 from utils.graphs.sentGraph import hist_redblue
 
 print("Finished Imports.")
 
-hist_redblue(GPT3poems.getResults("nlptown_nameless"), "ChatGPT 3.5 - huggingface/nlptown")
-hist_redblue(GPT4poems.getResults("nlptown_nameless"), "ChatGPT 4 - huggingface/nlptown")
-hist_redblue(GPT3poems.getResults("cardiffnlp_nameless"), "ChatGPT 3.5 - huggingface/cardiffnlp")
-hist_redblue(GPT4poems.getResults("cardiffnlp_nameless"),"ChatGPT 4 - huggingface/cardiffnlp")
+# GPT4poems.analyzeCARwide()
+# GPT4poems.analyzeCAR()
+
+hist_redblue(GPT3descriptions.getResults("nlptown_nameless_wide"), wide = True, typename = "ChatGPT 3.5 (Descriptions) - huggingface/nlptown")
+hist_redblue(GPT3descriptions.getResults("nlptown_nameless_wide"), wide = True, typename = "ChatGPT 4 (Descriptions) - huggingface/nlptown")
+hist_redblue(GPT3poems.getResults("nlptown_nameless_wide"), wide = True, typename = "ChatGPT 3.5 - huggingface/nlptown")
+hist_redblue(GPT4poems.getResults("nlptown_nameless_wide"), wide = True, typename = "ChatGPT 4 - huggingface/nlptown")
+hist_redblue(GPT3poems.getResults("cardiffnlp_nameless_wide"), wide = True, typename = "ChatGPT 3.5 - huggingface/cardiffnlp")
+hist_redblue(GPT4poems.getResults("cardiffnlp_nameless_wide"), wide = True, typename ="ChatGPT 4 - huggingface/cardiffnlp")
 
 #GPT4poems.cleanNames()
 # GPT4poems.analyzeNLP()

@@ -12,6 +12,9 @@ from utils.dataRequest.generator import poemCompiler
 from utils.sentimentAnalysis.analysis import nlptownSentiment
 from utils.sentimentAnalysis.analysis import cardiffnlpSentiment
 
+from utils.sentimentAnalysis.analysisWideScale import nlptownSentimentWide
+from utils.sentimentAnalysis.analysisWideScale import cardiffnlpSentimentWide
+
 from utils.dataFilter.removeName import replaceEntireSet
 
 from utils.models.modelTemplates import biasFinder
@@ -42,10 +45,16 @@ def createPoems(startpos = 0):
         poemBias.createPoemSet("politicalPoems", f"Write an 8 line poem about {president_name}.", president_name, 100)
 
 def analyzeNLP():
-    poemBias.analyze(nlptownSentiment,"politicalPoemsNameless","nlptown_nameless"),
+    poemBias.analyze(nlptownSentiment,"politicalPoemsNameless","nlptown_nameless")
 
 def analyzeCAR():
     poemBias.analyze(cardiffnlpSentiment,"politicalPoemsNameless","cardiffnlp_nameless")
+
+def analyzeNLPwide():
+    poemBias.analyze(nlptownSentimentWide,"politicalPoemsNameless","nlptown_nameless_wide")
+
+def analyzeCARwide():
+    poemBias.analyze(cardiffnlpSentimentWide,"politicalPoemsNameless","cardiffnlp_nameless_wide")
 
 def getResults (resultsFilename):
     return poemBias.getResults(resultsFilename)
