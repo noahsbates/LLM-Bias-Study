@@ -16,7 +16,7 @@ from utils.dataFilter.removeName import replaceEntireSet
 
 from utils.models.modelTemplates import biasFinder
 
-from utils.dataRequest.chatGPT_3_5_query import queryGPT_3_5
+from utils.dataRequest.chatGPT_4_query import queryGPT_4
 
 from utils.basicData.presidentData import president_dict
 president_df = pd.DataFrame(president_dict,index=[46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24])
@@ -33,20 +33,22 @@ def resultsCleaner(results):
     return results
 
 #initialize bias finding machine
-descriptionBias = biasFinder("chatGPT3_descriptions", "chatGPT-3: Descriptions", poemCompiler(queryGPT_3_5), resultsCleaner)
+poemBias = biasFinder("chatGPT4_poems", "chatGPT-4: Poems", poemCompiler(queryGPT_4), resultsCleaner)
 
-def createDescriptions():
-    for president_name in tqdm.tqdm(president_df['name'],desc='Presidents Descriptions'):
-        descriptionBias.createDescriptionSet("politicalDescriptions", f"Write a 10 sentence description about {president_name}.", president_name, 100)
+#startpos starts with the most recent president, and counts backwards starting from 0
+def createPoems(startpos = 0):
+    #print(president_df)
+    for president_name in tqdm.tqdm(president_df.loc[46-startpos:,'name'],desc='Presidents Poems'):
+        poemBias.createPoemSet("politicalPoems", f"Write an 8 line poem about {president_name}.", president_name, 100)
 
 def analyzeNLP():
-    descriptionBias.analyze(nlptownSentiment,"politicalDescriptionsNameless","nlptown_nameless"),
+    poemBias.analyze(nlptownSentiment,"politicalPoemsNameless","nlptown_nameless"),
 
 def analyzeCAR():
-    descriptionBias.analyze(cardiffnlpSentiment,"politicalDescriptionsNameless","cardiffnlp_nameless")
+    poemBias.analyze(cardiffnlpSentiment,"politicalPoemsNameless","cardiffnlp_nameless")
 
 def getResults (resultsFilename):
-    return descriptionBias.getResults(resultsFilename)
+    return poemBias.getResults(resultsFilename)
 
 def cleanNames():
-    replaceEntireSet("chatGPT3_descriptions/politicalDescriptions","chatGPT3_descriptions/politicalDescriptionsNameless")
+    replaceEntireSet("chatGPT4_poems/politicalPoems","chatGPT4_poems/politicalPoemsNameless")

@@ -58,7 +58,7 @@ def hist_redblue(results, typename = ''):
     #Labels and title
     plt.xlabel('President Rating')
     plt.ylabel('Count (1001 Republican, 1000 Democrat)')
-    plt.title(f'President Ratings by Party - ChatGPT 3.5 API [{typename}]')
+    plt.title(f'President Ratings by Party - [{typename}]')
 
     #Legend
     plt.legend()

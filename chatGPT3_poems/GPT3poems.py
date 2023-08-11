@@ -49,4 +49,4 @@ def getResults (resultsFilename):
     return poemBias.getResults(resultsFilename)
 
 def cleanNames():
-    replaceEntireSet("poemTests/politicalPoems","poemTests/politicalPoemsNameless")
+    replaceEntireSet("chatGPT3_poems/politicalPoems","chatGPT3_poems/politicalPoemsNameless")
