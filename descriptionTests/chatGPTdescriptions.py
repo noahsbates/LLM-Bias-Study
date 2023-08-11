@@ -13,6 +13,8 @@ from utils.dataRequest.generator import generatePoems
 from utils.sentimentAnalysis.analysis import nlptownSentiment
 from utils.sentimentAnalysis.analysis import cardiffnlpSentiment
 
+from utils.dataFilter.removeName import replaceEntireSet
+
 #Notes: results2.csv was analyzed with nlptown/bert-base-multilingual-uncased-sentiment
 #       results3.csv was analyzed with cardiffnlp/twitter-roberta-base-sentiment-latest
 
@@ -33,13 +35,13 @@ def createDescriptions():
 
 ######## Different Analysis Algorithms ########
 
-def calculateResults2 ():
-    results = pd.DataFrame(nlptownSentiment("descriptionTests/politicalDescriptions"), index=[46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24])
-    saveResults(results,"results2")
+def calculateResults2 (folderToRead,outputCSV):
+    results = pd.DataFrame(nlptownSentiment(f"descriptionTests/{folderToRead}"), index=[46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24])
+    saveResults(results,outputCSV)
 
-def calculateResults3 ():
-    results = pd.DataFrame(cardiffnlpSentiment("descriptionTests/politicalDescriptions"), index=[46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24])
-    saveResults(results,"results3")
+def calculateResults3 (folderToRead,outputCSV):
+    results = pd.DataFrame(cardiffnlpSentiment(f"descriptionTests/{folderToRead}"), index=[46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24])
+    saveResults(results,outputCSV)
 
 ######## Data Processing ########
 
@@ -56,21 +58,17 @@ def saveResults (results,resultsName):
 
 ######## Data Retrieval  ########
 
-def getResults2 ():
-    results = pd.read_csv("descriptionTests/results2.csv", converters={'ratings': pd.eval})
+def getResults (resultsFilename):
+    results = pd.read_csv(f"descriptionTests/{resultsFilename}.csv", converters={'ratings': pd.eval})
     results = results.drop(['Unnamed: 0'], axis=1)
     results = results.set_index([[46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24]])
-    print("results2:", results)
+    print(f"{resultsFilename}:", results)
     return results
 
-def getResults3 ():
-    results = pd.read_csv("descriptionTests/results3.csv", converters={'ratings': pd.eval})
-    results = results.drop(['Unnamed: 0'], axis=1)
-    results = results.set_index([[46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24]])
-    print("results3:", results)
-    return results
+########## Data Cleaning ########
 
-
+def cleanNames():
+    replaceEntireSet("descriptionTests/politicalDescriptions","descriptionTests/politicalDescriptionsNameless")
 
 
 
