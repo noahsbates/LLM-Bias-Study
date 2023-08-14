@@ -62,7 +62,7 @@ Different models for judging the sentiment of a poem or description
 - Poems are more ambiguous and allow room for political bias in chatGPT
   
 ### chatGPT 4 poems
-- WIP
+- Compared to chatGPT 3.5 poems
   
 ### gunTests
 - WIP
