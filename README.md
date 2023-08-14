@@ -13,6 +13,7 @@ Completed:
 - Filtering of presidential data to remove names and therein bias in huggingface
 - Presentation of data in histograms/timed boxplots
 - Utilities and modularization, should be possible to quickly analyze more LLMs
+- Hume AI work in progress
 
 In the next week:
 - PaLM LLM
