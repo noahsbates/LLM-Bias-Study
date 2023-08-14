@@ -47,3 +47,114 @@ class biasFinder():
             results = self.resultsCleaner(results)
         print(f"Data from: {resultsFilename}")
         return results
+
+# calculates the bias for models that determine sentiment
+class sentimentLLMFinder():
+
+    def __init__(self, test_folder_path, sentimentSentences: list, sentimentFunc, resultsCleaner):
+        self.sentimentSentences = sentimentSentences
+        self.sentimentFunc = sentimentFunc
+        self.test_path = test_folder_path
+        self.resultsCleaner = resultsCleaner
+
+    def analyze(self, sentenceInputs: list, fileName, huggingFacePipeline = None):
+        sentimentDF = pd.DataFrame()
+        for eachInput in tqdm.tqdm(sentenceInputs, desc='Analyzing sentiment function...'):
+
+            inputSentimentSet = []
+            for i in tqdm.tqdm(self.sentimentSentences, desc=f'Current input: {eachInput}'):
+                if huggingFacePipeline == None:
+                    sentiment = self.sentimentFunc(i.replace("NAME", eachInput))
+                else:
+                    sentiment = self.sentimentFunc(huggingFacePipeline, i.replace("NAME", eachInput))
+                inputSentimentSet.append(sentiment)
+            
+            sentimentDF[eachInput] = inputSentimentSet
+        
+        sentimentDF.to_csv(f"{self.test_path}/{fileName}.csv")
+    
+    def getResults (self, resultsFilename):
+        results = pd.read_csv(f"{self.test_path}/{resultsFilename}.csv")
+        if self.resultsCleaner != None:
+            results = self.resultsCleaner(results)
+        print(f"Data from: {resultsFilename}")
+        return results
+    
+import asyncio
+
+class sentimentLLMFinder:
+
+    def __init__(self, test_folder_path, sentimentSentences: list, sentimentFunc, resultsCleaner):
+        self.sentimentSentences = sentimentSentences
+        self.sentimentFunc = sentimentFunc
+        self.test_path = test_folder_path
+        self.resultsCleaner = resultsCleaner
+
+    async def get_emotions_for_sentence(self, socket, sentence):
+        result = await socket.send_text(sentence)
+        emotions = result["language"]["predictions"][0]["emotions"]
+        return emotions
+
+    async def gather_sentiment(self, sentenceInputs: list, fileName, huggingFacePipeline=None):
+        sentimentDF = pd.DataFrame()
+        for eachInput in tqdm.tqdm(sentenceInputs, desc='Analyzing sentiment function...'):
+            inputSentimentSet = []
+            for i in tqdm.tqdm(self.sentimentSentences, desc=f'Current input: {eachInput}'):
+                if huggingFacePipeline is None:
+                    sentiment = await self.sentimentFunc(i.replace("NAME", eachInput))
+                else:
+                    sentiment = await self.sentimentFunc(huggingFacePipeline, i.replace("NAME", eachInput))
+                inputSentimentSet.append(sentiment)
+
+            sentimentDF[eachInput] = inputSentimentSet
+
+        sentimentDF.to_csv(f"{self.test_path}/{fileName}.csv")
+
+    def getResults(self, resultsFilename):
+        results = pd.read_csv(f"{self.test_path}/{resultsFilename}.csv")
+        if self.resultsCleaner is not None:
+            results = self.resultsCleaner(results)
+        print(f"Data from: {resultsFilename}")
+        return results
+
+from hume import HumeStreamClient
+from hume.models.config import LanguageConfig
+
+class sentimentLLMFinderHUME():
+
+    def __init__(self, test_folder_path, sentimentSentences: list, resultsCleaner, api_key):
+        self.sentimentSentences = sentimentSentences
+        self.test_path = test_folder_path
+        self.resultsCleaner = resultsCleaner
+        self.api_key = api_key
+    
+    async def get_emotions_for_sentence(self, socket, sentence):
+        result = await socket.send_text(sentence)
+        emotions = result["language"]["predictions"][0]["emotions"]
+        return emotions
+
+    async def analyze(self, sentenceInputs: list, fileName):
+        client = HumeStreamClient(self.api_key)
+        config = LanguageConfig()
+        async with client.connect([config]) as socket:
+            sentimentDF = pd.DataFrame()
+
+            for eachInput in tqdm.tqdm(sentenceInputs, desc='Analyzing sentiment function...'):
+
+                inputSentimentSet = []
+
+                for i in tqdm.tqdm(self.sentimentSentences, desc=f'Current input: {eachInput}'):
+                    sentiment = await self.get_emotions_for_sentence(socket, i.replace("NAME", eachInput))
+                    inputSentimentSet.append(sentiment)
+
+                sentimentDF[eachInput] = inputSentimentSet
+
+            sentimentDF.to_csv(f"{self.test_path}/{fileName}.csv")
+
+    
+    def getResults (self, resultsFilename):
+        results = pd.read_csv(f"{self.test_path}/{resultsFilename}.csv")
+        if self.resultsCleaner != None:
+            results = self.resultsCleaner(results)
+        print(f"Data from: {resultsFilename}")
+        return results

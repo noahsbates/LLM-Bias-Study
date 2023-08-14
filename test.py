@@ -1,22 +1,22 @@
-class A():
-    def __init__(self):
-        self.bop = 1
-    def myFunc(self, input):
-        return input * 2
+import asyncio
 
-instance1 = A()
+from hume import HumeStreamClient
+from hume.models.config import LanguageConfig
 
-print(instance1.myFunc(2))
+samples = [
+    "Mary had a little lamb,",
+    "Its fleece was white as snow."
+    "Everywhere the child went,"
+    "The little lamb was sure to go."
+]
 
-def newFunc(a):
-    return a * 5
+async def main():
+    client = HumeStreamClient("ekuwdNB1anG7SvMVvQeQN5xtkWjWn16WCq7dDU7cFslSrqbK")
+    config = LanguageConfig()
+    async with client.connect([config]) as socket:
+        for sample in samples:
+            result = await socket.send_text(sample)
+            emotions = result["language"]["predictions"][0]["emotions"]
+            print(emotions)
 
-instance1.myFunc2 = newFunc
-
-print(instance1.myFunc2(2))
-
-def newFunc(a):
-    return a * 3
-
-
-print(instance1.myFunc2(2))
+asyncio.run(main())

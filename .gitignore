@@ -1,3 +1,6 @@
 myenv/
 __pycache__/
-*.csv
+outdated/
+*.bat
+config.py
+test.py
